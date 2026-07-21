@@ -1,0 +1,49 @@
+import java.util.ArrayList;
+import java.util.Scanner;
+
+public class CityListOperations {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        ArrayList<String> cities = new ArrayList<>();
+        
+        cities.add("Chennai");
+        cities.add("Madurai");
+        cities.add("Trichy");
+        System.out.println("Initial List: " + cities); 
+                                                                     
+        System.out.print("Enter city to append: ");
+        String city = sc.nextLine();
+        cities.add(city);
+        System.out.println("Updated List: " + cities);
+
+        System.out.print("\nEnter index to insert: ");
+        int index = sc.nextInt();
+        sc.nextLine(); // Clear the buffer newline
+        
+        System.out.print("Enter city to insert: ");
+        String insertCity = sc.nextLine();
+        cities.add(index, insertCity);
+        System.out.println("Updated List: " + cities);
+     
+        System.out.print("\nEnter city to search: ");
+        String searchCity = sc.nextLine();
+        int pos = cities.indexOf(searchCity);
+        if (pos != -1) {
+            System.out.println("City Found at Index: " + pos);
+        } else {
+            System.out.println("City Not Found");
+        }
+
+        System.out.print("\nEnter starting letter: ");
+        char letter = sc.next().charAt(0);
+        System.out.print("Cities Starting with '" + letter + "': ");
+        for (String c : cities) {
+            if (c.charAt(0) == letter || c.charAt(0) == Character.toUpperCase(letter)
+                    || c.charAt(0) == Character.toLowerCase(letter)) {
+                System.out.print(c + " ");
+            }
+        }
+        
+        sc.close();
+    }
+}
