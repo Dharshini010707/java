@@ -1,0 +1,75 @@
+import java.util.Scanner;
+
+public class Main {
+    int num;
+    int state = 0;
+
+    public static void main(String[] args) {
+        Main m = new Main();
+        
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Enter number: ");
+        m.num = sc.nextInt();
+
+        new Thread(new Generator(m)).start();
+        new Thread(new Even(m)).start();
+        new Thread(new Odd(m)).start();
+    }
+}
+
+class Generator implements Runnable {
+    Main m;
+
+    Generator(Main obj) {
+        m = obj;
+    }
+
+    public void run() {
+        if (m.state == 0) {
+            System.out.println("Thread 1:Generated Number=" + m.num);
+            m.state = 1;
+        }
+    }
+}
+
+class Even implements Runnable {
+    Main m;
+
+    Even(Main obj) {
+        m = obj;
+    }
+
+    public void run() {
+        while (m.state != 0) {
+            if (m.state == 1) {
+                if (m.num % 2 == 0) {
+                    int square = m.num * m.num;
+                    System.out.println("Thread 2:Square of " + m.num + "=" + square);
+                    m.state = 0;
+                }
+            }
+            try { Thread.sleep(1); } catch (Exception e) {}
+        }
+    }
+}
+
+class Odd implements Runnable {
+    Main m;
+
+    Odd(Main obj) {
+        m = obj;
+    }
+
+    public void run() {
+        while (m.state != 0) {
+            if (m.state == 1) {
+                if (m.num % 2 != 0) {
+                    int cube = m.num * m.num * m.num;
+                    System.out.println("Thread 3:Cube of " + m.num + "=" + cube);
+                    m.state = 0;
+                }
+            }
+            try { Thread.sleep(1); } catch (Exception e) {}
+        }
+    }
+}
